@@ -1,0 +1,96 @@
+{% extends 'layout/admin_weblayout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+Study material
+{% endblock %}
+{% block content %}
+<div class='container'>
+    <div class='row'>   
+        <div class="md col-5">
+            <div>
+                {% if messages %}          
+                {% for message in messages %}
+                <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                  
+                  {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %} 
+            </div>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div >
+                    {{file_obj.title|as_crispy_field}}
+                </div>
+                <div>
+                    {{file_obj.content_type|as_crispy_field}}
+                </div>
+                <div>
+                    {{file_obj.upload|as_crispy_field}}
+                </div>
+                <div>
+                    {{file_obj.subject|as_crispy_field}}
+                </div>
+
+              
+                <div>
+                <button type="submit" class="btn btn-primary mb-3">submit</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-7">
+            <table class="table">
+                
+                <tr>
+                    <th>Sr_No.</th>
+                    <th> title </th>
+                    <th>content_type </th>
+                    <th>upload</th>
+                    <th>subject</th>
+                    <th>Action</th>
+                </tr>
+                {% for x in obj  %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{x.title}}</td>
+                    <td>{{x.content_type}}</td>
+                    <td>{{x.upload}}</td>
+                    <td>{{x.subject}}</td>
+                    <td><a href="{% url 'editpage' x.id %}" class="btn btn-primary mb-3">Edit</a>
+                        <form method="POST" action="{% url 'deletepage' x.id %}">
+                            {% csrf_token %}
+                            <button type="submit">delete</button>
+                        
+                        
+                        </form>
+                    </td>
+                    
+                </tr>
+                {% endfor %}
+            </table>
+            <div class="card-footer">
+                <div class="clo-sm-5"  style="text-align: end;">
+                    <a href="{% url 'exportpage' %}">
+                        <div>
+                            <button type="submit" class="btn btn-primary ">Export Excel</button>
+                        </div>
+                    </a>
+            </div>
+            <div class="card-footer">
+                <div class="clo-sm-12"  style="text-align: end;">
+                    <a href="{% url 'xport' %}">
+                        <div>
+                            <button type="submit" class="btn btn-primary ">Export pdf</button>
+                        </div>
+                    </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
