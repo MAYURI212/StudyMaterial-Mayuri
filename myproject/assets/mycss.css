@@ -1,0 +1,19 @@
+p{
+    Font-size:100%;
+    color:#9ec279;
+        }
+
+
+.myclass{
+    color: blue;
+    font-size: 100%;
+    border-style: solid;
+    border-color: darkred;
+}
+
+#myid{
+    color: darkviolet;
+    font-size: 100%;
+    border-color: deeppink;
+    border-color: gold;
+}
